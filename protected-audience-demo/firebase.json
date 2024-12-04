@@ -1,0 +1,186 @@
+{
+  "hosting": [
+    {
+      "site": "protected-audience-demo",
+      "public": "sites/home",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "home"
+        }
+      ]
+    },
+    {
+      "site": "protected-audience-demo-advertiser",
+      "public": "sites/advertiser",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "advertiser"
+        },
+        {
+          "source": "/.well-known/**",
+          "function": "advertiser"
+        }
+      ]
+    },
+    {
+      "site": "protected-audience-demo-publisher",
+      "public": "sites/publisher",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "publisher"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**",
+          "headers": [
+            {
+              "key": "Permissions-Policy",
+              "value": "fullscreen=(self \"https://localhost:4438\" \"https://protected-audience-demo-ssp.web.app\")"
+            },
+            {
+              "key": "X-Allow-FLEDGE",
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "site": "protected-audience-demo-dsp",
+      "public": "sites/dsp",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "dsp"
+        },
+        {
+          "source": "/.well-known/**",
+          "function": "dsp"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**",
+          "headers": [
+            {
+              "key": "Ad-Auction-Allowed",
+              "value": "true"
+            },
+            {
+              "key": "X-Allow-FLEDGE",
+              "value": "true"
+            },
+            {
+              "key": "Supports-Loading-Mode",
+              "value": "fenced-frame"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "site": "protected-audience-demo-ssp",
+      "public": "sites/ssp",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "ssp"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**",
+          "headers": [
+            {
+              "key": "Ad-Auction-Allowed",
+              "value": "true"
+            },
+            {
+              "key": "X-Allow-FLEDGE",
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "site": "protected-audience-demo-adtech",
+      "public": "sites/adtech",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "adtech"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**",
+          "headers": [
+            {
+              "key": "Ad-Auction-Allowed",
+              "value": "true"
+            },
+            {
+              "key": "X-Allow-FLEDGE",
+              "value": "true"
+            },
+            {
+              "key": "Supports-Loading-Mode",
+              "value": "fenced-frame"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "site": "fledge-demo",
+      "redirects": [
+        {
+          "source": "**",
+          "destination": "https://protected-audience-demo.web.app",
+          "type": 301
+        }
+      ]
+    },
+    {
+      "site": "paapi-demo",
+      "redirects": [
+        {
+          "source": "**",
+          "destination": "https://protected-audience-demo.web.app",
+          "type": 301
+        }
+      ]
+    }
+  ],
+  "emulators": {
+    "functions": {
+      "port": "5080"
+    },
+    "hosting": {
+      "host": "localhost",
+      "port": "3000"
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": ["node_modules", ".git", "firebase-debug.log", "firebase-debug.*.log", "*.local"]
+    }
+  ]
+}

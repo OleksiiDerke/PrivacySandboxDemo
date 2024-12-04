@@ -1,0 +1,25 @@
+{
+  "name": "protected-audience-demo",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "firebase emulators:start",
+    "deploy": "firebase deploy",
+    "lint": "npx prettier --write .",
+    "shell": "firebase functions:shell",
+    "logs": "firebase functions:log",
+    "postinstall": "cd functions && npm install && cd ..",
+    "kill-8080": "lsof -ti tcp:8080 | xargs kill -9"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^2.6.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express-handlebars": "^8.0.1",
+    "firebase": "^11.0.2",
+    "lsof": "^0.1.0"
+  }
+}

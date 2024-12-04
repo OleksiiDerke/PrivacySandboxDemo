@@ -1,0 +1,22 @@
+<style>
+  .black-border { border: 2px solid black; width: 400px; height: 200px; padding: 10px; margin: 20px; }
+</style>
+<script src='join-ad-interest-group.js'></script>
+<script>
+  function handleAddGroup() { const name = document.getElementById('groupInput').value; joinInterestGroup('{{{dspUrl}}}',
+  name); } function handleLeaveGroup() { const name = document.getElementById('leaveInput').value; leaveInterestGroup('{{{dspUrl}}}',
+  name); }
+</script>
+<body>
+  <div class='black-border'>
+    <p>DSP page</p>
+    <div>
+      <input type='text' id='groupInput' placeholder='Type interest group name...' />
+      <button id='submitButton' onClick='handleAddGroup()'>Add interest group</button>
+    </div>
+    <div>
+      <input type='text' id='leaveInput' placeholder='Type interest group name...' />
+      <button id='submitButton' onClick='handleLeaveGroup()'>Leave interest group</button>
+    </div>
+  </div>
+</body>

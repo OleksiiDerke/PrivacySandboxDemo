@@ -1,0 +1,29 @@
+<div class='demo-explainer'>
+  <h1>Protected Audience API Demo (PAAPI)</h1>
+
+  <h3>Setup</h3>
+  <li>
+    Execute Chrome from the command line and set the flag
+    <code>--enable-privacy-sandbox-ads-apis --disable-features=EnforcePrivacySandboxAttestations,FledgeEnforceKAnonymity</code>
+  </li>
+  <h3>Instructions</h3>
+  <ol>
+    <li>
+      Visit the
+      <a href='{{{advertiserUrl}}}' target='_blank'>advertiser page</a>
+      which will add your browser to an interest group.
+    </li>
+    <li>
+      Visit the
+      <a href='{{{publisherUrl}}}' target='_blank'>publisher page</a>
+      to see the ad rendered in a fenced frame.</li>
+    <li>
+      Visit the
+      <a href='{{{dspUrl}}}' target='_blank'>DSP page</a>
+      via nginx reverse proxy from 8087 to 4437.</li>
+    <li>
+      Visit the
+      <a href='{{{sspUrl}}}' target='_blank'>SSP page</a>
+      via nginx reverse proxy from 8088 to 4438.</li>
+  </ol>
+</div>
