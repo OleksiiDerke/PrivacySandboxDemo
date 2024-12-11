@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 function generateBid(interestGroup, auctionSignals, perBuyerSignals, trustedBiddingSignals, browserSignals) {
+  console.log('generate bid');
+
   const [testAd] = interestGroup.ads;
 
   return {
@@ -21,7 +23,7 @@ function generateBid(interestGroup, auctionSignals, perBuyerSignals, trustedBidd
     ad: {
       adName: testAd?.metadata?.adName,
     },
-    render: testAd?.renderUrl,
+    render: testAd?.renderURL,
   };
 }
 

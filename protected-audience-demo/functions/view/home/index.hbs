@@ -1,6 +1,21 @@
+<style>
+  #result { width: 600px; height: 50px; display: flex; justify-content: center; align-items: center; color: white;
+  font-size: 18px; } .green { background-color: green; } .red { background-color: red; }
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', () => { const resultDiv = document.getElementById('result'); try { const
+  supportsJoinAdInterestGroup = 'joinAdInterestGroup' in navigator; const featurePolicyAllowsJoinGroup =
+  document.featurePolicy.allowsFeature('join-ad-interest-group'); const featurePolicyAllowsRunAuction =
+  document.featurePolicy.allowsFeature('run-ad-auction'); if (supportsJoinAdInterestGroup &&
+  featurePolicyAllowsJoinGroup && featurePolicyAllowsRunAuction) { resultDiv.classList.add('green'); resultDiv.innerText
+  = 'navigator.joinAdInterestGroup() is supported on this page'; } else { resultDiv.classList.add('red');
+  resultDiv.innerText = 'navigator.joinAdInterestGroup() is not supported on this page'; } } catch (error) {
+  resultDiv.classList.add('red'); resultDiv.innerText = 'navigator.joinAdInterestGroup() is not supported on this page';
+  } });
+</script>
 <div class='demo-explainer'>
   <h1>Protected Audience API Demo (PAAPI)</h1>
-
+  <div id='result'></div>
   <h3>Setup</h3>
   <li>
     Execute Chrome from the command line and set the flag

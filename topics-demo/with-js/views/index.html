@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Topics API demo</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link href="favicon.ico" rel="shortcut icon" />
+
+    <script type="module" src="js/taxonomy.js"></script>
+    <script type="module" src="js/main.js" defer></script>
+    <style>
+      #result {
+        width: 600px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 18px;
+      }
+      .green {
+        background-color: green;
+      }
+      .red {
+        background-color: red;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const resultDiv = document.getElementById("result");
+        try {
+          if (
+            "browsingTopics" in document &&
+            document.featurePolicy.allowsFeature("browsing-topics")
+          ) {
+            resultDiv.classList.add("green");
+            resultDiv.innerText =
+              "document.browsingTopics() is supported on this page";
+          } else {
+            resultDiv.classList.add("red");
+            resultDiv.innerText =
+              "document.browsingTopics() is not supported on this page";
+          }
+        } catch (error) {
+          resultDiv.classList.add("red");
+          resultDiv.innerText =
+            "document.browsingTopics() is not supported on this page";
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <h1>Topics API Demo</h1>
+      <div id="result"></div>
+      <p>
+        This site provides a basic demo of Topics using the
+        <code>document.browsingTopics()</code> JavaScript API.
+      </p>
+
+      <p>
+        An iframe with
+        <code
+          >src=<a href="https://localhost/observe/index.html"
+            >https://localhost/observe/index.html</a
+          ></code
+        >
+        (i.e. with the same origin as this page) calls
+        <code>document.browsingTopics()</code>. This iframe is embedded on
+        several sites, to observe topics:
+      </p>
+
+      <ul>
+        <li>
+          <a href="https://pets-animals-pets-cats.glitch.me" target="_blank"
+            >pets-animals-pets-cats.glitch.me</a
+          >
+        </li>
+        <li>
+          <a href="https://cats-cats-cats-cats.glitch.me" target="_blank"
+            >cats-cats-cats-cats.glitch.me</a
+          >
+        </li>
+        <li>
+          <a href="https://cats-pets-animals-pets.glitch.me" target="_blank"
+            >cats-pets-animals-pets.glitch.me</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://cats-feline-meow-purr-whiskers-pet.glitch.me"
+            target="_blank"
+            >cats-feline-meow-purr-whiskers-pet.glitch.me</a
+          >
+        </li>
+      </ul>
+
+      <p>Topics observed will be displayed on this page (see below).</p>
+
+      <h2>Try out the demo</h2>
+
+      <ol>
+        <li>Visit each of the sites listed above in a separate tab.</li>
+        <li>
+          The most popular topics observed for the most recent three
+          <a
+            href="https://developer.chrome.com/docs/privacy-sandbox/topics/#how-does-the-topics-api-work"
+            >epochs</a
+          >
+          will be displayed below, refreshed every second. The epoch length is
+          set to 15 seconds using the flags above (the default length is one
+          week).
+        </li>
+      </ol>
+
+      <p>
+        If no topics are displayed, navigate repeatedly to the pages listed
+        above, e.g. by refreshing each page (not hard-refresh).
+      </p>
+      <p>
+        The list of topics is only updated if there is a change in observed
+        topics.
+      </p>
+
+      <p>
+        <strong>You may see unexpected results.</strong> Topics inference is not
+        deterministic, and there is a 5% chance that a random topic is returned
+        for each epoch.
+      </p>
+
+      <div id="log">
+        <p id="no-topics">
+          No topics observed yet: try visiting one of the sites above.
+        </p>
+      </div>
+
+      <div id="fetch-data">
+        <p id="no-headers">
+          sec-browsing-topics request headers will be displayed here.
+        </p>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>

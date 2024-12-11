@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Topics iframe demo</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="observe/css/main.css" />
+    <link href="favicon.ico" rel="shortcut icon" />
+    <style>
+      #result {
+        width: 600px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 18px;
+      }
+      .green {
+        background-color: green;
+      }
+      .red {
+        background-color: red;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const resultDiv = document.getElementById("result");
+        try {
+          if (
+            "browsingTopics" in document &&
+            document.featurePolicy.allowsFeature("browsing-topics")
+          ) {
+            resultDiv.classList.add("green");
+            resultDiv.innerText =
+              "document.browsingTopics() is supported on this page";
+          } else {
+            resultDiv.classList.add("red");
+            resultDiv.innerText =
+              "document.browsingTopics() is not supported on this page";
+          }
+        } catch (error) {
+          resultDiv.classList.add("red");
+          resultDiv.innerText =
+            "document.browsingTopics() is not supported on this page";
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <h1>Topics iframe demo</h1>
+      <div id="result"></div>
+      <p>
+        This page includes an iframe, displayed below. The <code>src</code> of
+        this is <code>/observe/index.html</code>. JavaScript in that iframe
+        calls <code>document.browsingTopics()</code>.
+      </p>
+
+      <p>
+        One or more topics from the
+        <a
+          href="https://github.com/patcg-individual-drafts/topics/blob/main/taxonomy_v1.md#:~:text=cats"
+          >topics taxonomy</a
+        >
+        are inferred for the hostname of this page's URL.
+      </p>
+
+      <p>
+        If you return to main page
+        <a href="https://localhost">localhost</a>, one or more topics observed
+        for this page should be included in the array of topics returned by
+        <code>document.browsingTopics()</code>, since that site has the same
+        origin as the iframe on this page, from which topics were observed.
+      </p>
+    </main>
+
+    <iframe src="https://localhost/observe/index.html"></iframe>
+  </body>
+</html>

@@ -1,6 +1,11 @@
+<style>
+  .border { width: 450px; height: 150px; padding: 10px; margin: 20px; }
+</style>
 <script src='{{{sspUrl}}}/run-auction.js'> </script>
 <script>
-  runAuction('{{{sspUrl}}}', '{{{dspUrl}}}')
+  const config = runAuction('{{{sspUrl}}}', '{{{dspUrl}}}'); function showConfig() { config.then(result => {
+  document.getElementById("config").innerText = result; }).catch(error => { console.error("Promisewas rejected:",
+  error); }); }
 </script>
 
 <div class='demo-description'>
@@ -10,5 +15,7 @@
     <a href='{{{advertiserUrl}}}' target='_blank'>advertiser page</a>
     and has been assigned to an interest group, an example ad should be rendered below.</p>
 </div>
+<button id='showConfig' onClick='showConfig()'>Display config</button>
+<div id='config'></div>
 
-<fencedframe id='protected-audience-ad' mode='opaque-ads'></fencedframe>
+<fencedframe id='protected-audience-ad' mode='opaque-ads' class='border'></fencedframe>

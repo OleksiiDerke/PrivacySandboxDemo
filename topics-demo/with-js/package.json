@@ -1,0 +1,16 @@
+{
+  "name": "topics-demo",
+  "version": "0.0.1",
+  "description": "Access topics in the  header of a fetch request",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "latest",
+    "express": "latest"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}

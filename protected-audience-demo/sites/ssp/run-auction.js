@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 const runAuction = async (sspUrl, dspUrl) => {
+  console.log('run auction');
   const resolveToConfig = typeof window.FencedFrameConfig !== 'undefined';
 
   const auctionConfig = {
@@ -29,10 +30,8 @@ const runAuction = async (sspUrl, dspUrl) => {
     perBuyerTimeouts: {
       '*': 50,
     },
-    resolveToConfig
+    resolveToConfig,
   };
-
-  console.log('auctionConfig = ', JSON.stringify(auctionConfig));
 
   // Run ad auction
   const selectedAd = await navigator.runAdAuction(auctionConfig);
@@ -45,4 +44,6 @@ const runAuction = async (sspUrl, dspUrl) => {
   } else {
     frame.src = selectedAd;
   }
+
+  return JSON.stringify(auctionConfig);
 };

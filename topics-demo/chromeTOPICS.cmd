@@ -1,0 +1,1 @@
+start chrome.exe --enable-features=BrowsingTopics,BrowsingTopicsParameters:time_period_per_epoch/15s/max_epoch_introduction_delay/3s,PrivacySandboxAdsAPIsOverride,PrivacySandboxSettings3,BrowsingTopicsBypassIPIsPubliclyRoutableCheck,OverridePrivacySandboxSettingsLocalTesting --args --disable-features=EnforcePrivacySandboxAttestations
