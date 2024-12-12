@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prebid.js PAAPI Mock Demo</title>
+    <script src="js/prebid9.22.0.js"></script>
+    <script src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+  </head>
+  <body>
+    <h1>Prebid.js with PAAPI Mock Demo</h1>
+    <div
+      id="ad-slot"
+      style="width: 300px; height: 250px; border: 1px solid #ccc"
+    >
+      <div id="div-gpt-ad-123456789-0"></div>
+    </div>
+
+    <script>
+      // Step 1: Configure Google Publisher Tag (GPT)
+      window.googletag = window.googletag || { cmd: [] };
+      googletag.cmd.push(function () {
+        googletag
+          .defineSlot(
+            "/123456789/mockAdUnit",
+            [300, 250],
+            "div-gpt-ad-123456789-0"
+          )
+          .addService(googletag.pubads());
+        googletag.enableServices();
+      });
+
+      // Step 2: Configure Prebid.js Ad Units with Mock Bids
+      var adUnits = [
+        {
+          code: "div-gpt-ad-123456789-0",
+          mediaTypes: {
+            banner: {
+              sizes: [[300, 250]],
+            },
+          },
+          bids: [
+            {
+              bidder: "mockBidder",
+              params: {
+                placementId: "mockPlacementId",
+              },
+            },
+          ],
+        },
+      ];
+
+      // Mock the bidder response for demo purposes
+      pbjs = pbjs || {};
+      pbjs.que = pbjs.que || [];
+      pbjs.que.push(function () {
+        pbjs.setConfig({
+          usePAAPI: true,
+          paapi: {
+            enabled: true,
+            auctionSignals: {
+              mockSignalKey: "mockSignalValue",
+            },
+          },
+        });
+
+        pbjs.addAdUnits(adUnits);
+
+        // Mock bid response for 'mockBidder'
+        pbjs.bidderSettings = {
+          mockBidder: {
+            adServerTargeting: [
+              {
+                key: "hb_bidder",
+                val: "mockBidder",
+              },
+              {
+                key: "hb_pb",
+                val: "1.50", // Simulated bid price
+              },
+            ],
+          },
+        };
+
+        // Mock the bid response
+        pbjs.requestBids({
+          bidsBackHandler: function () {
+            console.log("Mock Bids Response:", pbjs.getBidResponses());
+
+            // Insert mock creative into the ad slot
+            document.getElementById("div-gpt-ad-123456789-0").innerHTML =
+              '<div style="background-color: #f4a; width: 300px; height: 250px; color: white; display: flex; align-items: center; justify-content: center; font-size: 20px;">' +
+              "Mock Ad Content" +
+              "</div>";
+
+            googletag.cmd.push(function () {
+              pbjs.setTargetingForGPTAsync();
+              googletag.pubads().refresh();
+            });
+          },
+        });
+      });
+
+      // Fallback timeout to ensure ad rendering
+      setTimeout(function () {
+        googletag.cmd.push(function () {
+          pbjs.setTargetingForGPTAsync();
+          googletag.pubads().refresh();
+        });
+      }, 2000);
+    </script>
+  </body>
+</html>
