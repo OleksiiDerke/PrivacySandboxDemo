@@ -1,0 +1,161 @@
+<html xmlns="http://www.w3.org/1999/html">
+  <head>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="/js/example-setup.js"></script>
+    <script async src="/js/prebid.js"></script>
+
+    <script>
+      var PREBID_TIMEOUT = 3000;
+      var adUnits = [
+        {
+          code: "div-1",
+          mediaTypes: {
+            banner: {
+              sizes: [[300, 250]],
+            },
+          },
+          ortb2Imp: {
+            ext: {
+              ae: 1,
+            },
+          },
+          bids: [
+            {
+              bidder: "optable",
+              params: {
+                site: "daa30ba1-5613-4a2c-b7f0-34e2c033202a",
+              },
+            },
+            {
+              bidder: "contextual",
+              params: {
+                site: "daa30ba1-5613-4a2c-b7f0-34e2c033202a",
+              },
+            },
+            {
+              bidder: "rtbhouse",
+              params: {
+                region: "prebid-eu",
+                publisherId: "FLEDGE-test",
+                // publisherId: "puHY4pgB9FOPeQBYYZEM"
+              },
+            },
+            ...(queryParams.addOpenX ? [{
+                bidder: 'openx',
+                params: {
+                    unit: '538703464',
+                    response_template_name: 'test_banner_ad',
+                    test: true,
+                    delDomain: 'sademo-d.openx.net'
+                }
+            }] : []),
+          ],
+        },
+      ];
+      var pbjs = pbjs || {};
+      pbjs.que = pbjs.que || [];
+
+      pbjs.que.push(function () {
+        console.log('queryParams=',queryParams);
+        pbjs.setConfig({
+          debug: true,
+          paapi: {
+            enabled: true,
+            // gpt: {
+            //   autoconfig: false,
+            // },
+            topLevelSeller: {
+              auctionConfig: {
+                seller: window.location.origin,
+                decisionLogicURL: new URL(
+                  "/js/decisionLogic.js",
+                  window.location
+                ).toString(),
+              },
+              overrideWinner: !!queryParams.overrideWinner
+            },
+          },
+        });
+        
+        // pbjs.setBidderConfig({
+        //         bidders: ["rtbhouse"],
+        //         config: {
+        //             fledgeEnabled: true,
+        //             fledgeConfig: {
+        //                 seller: window.location.origin, //'https://fledge-ssp.creativecdn.com', 
+        //                 decisionLogicUrl: new URL("shared/rtbhLogic.js", window.location).toString(), //'https://fledge-ssp.creativecdn.com/component-seller-prebid.js',
+        //             }
+        //         }
+        // });
+
+        pbjs.addAdUnits(adUnits);
+        requestBids();
+      });
+
+      function requestBids() {
+        pbjs.requestBids({
+          bidsBackHandler: renderAd,
+          timeout: PREBID_TIMEOUT,
+        });
+      }
+
+      function renderAd(bids) {
+        Object.entries(bids).forEach(([adUnit, { bids }]) => {
+          renderSlot(adUnit, bids?.[0]);
+        });
+      }
+
+      function renderSlot(adUnit, bid) {
+        const frame = document.querySelector(`#${adUnit} iframe`);
+
+        pbjs.getPAAPIBids({ adUnitCode: adUnit }).then((paapiBids) => {
+          console.log("paapiBids:", paapiBids);
+          frame.contentDocument.body.innerHTML = "";
+          // prefer PAAPI bid over contextual bid
+          const winnerAdId = paapiBids[adUnit]?.adId ?? bid?.adId;
+          winnerAdId && pbjs.renderAd(frame.contentDocument, winnerAdId);
+        });
+      }
+    </script>
+  </head>
+
+  <body>
+    <h2>No ad server, publisher as top level PAAPI seller example</h2>
+
+    <p></p>
+    <div id="controls">
+      <script>
+        addExampleControls(requestBids);
+      </script>
+    </div>
+    <div id="div-1" style="min-width: 300px; min-height: 250px; border: 1px solid black">
+      <iframe
+        class="ad"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        scrolling="no"
+      ></iframe>
+    </div>
+    <div style="margin-top: 20px">
+      <h2>Instructions</h2>
+      <ul>
+        <li>
+          <h3>Join interest groups</h3>
+
+          <p>
+            Join Optable interest group at
+            <a href="https://www.optable.co/" target="_blank">https://www.optable.co/</a>
+          </p>
+          <p>
+            Join RTB House interest group at
+            <ul>
+              <li><a href="https://rtbfashion.net" target="_blank">https://rtbfashion.net</a> or</li>    
+              <li><a href="https://www.mediaexpert.pl/" target="_blank">https://www.mediaexpert.pl/</a></li>  
+                            <li><a href="https://www.vangraaf.com/" target="_blank">https://www.vangraaf.com/</a></li>  
+            </ul>
+          </p>
+        </li></ul>
+    </div>
+  </body>
+</html>
