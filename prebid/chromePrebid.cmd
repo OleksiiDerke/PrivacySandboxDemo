@@ -1,1 +1,1 @@
-start chrome.exe --enable-privacy-sandbox-ads-apis --disable-features=EnforcePrivacySandboxAttestations,FledgeEnforceKAnonymity --enable-features=CookieDeprecationFacilitatedTesting:label/treatment_1.2/force_eligible/true --privacy-sandbox-enrollment-overrides=https://localhost:9999
+start chrome.exe --enable-privacy-sandbox-ads-apis --disable-features=EnforcePrivacySandboxAttestations,FledgeEnforceKAnonymity --privacy-sandbox-enrollment-overrides=https://localhost:9999
